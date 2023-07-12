@@ -6,7 +6,7 @@ export default class Bishop extends Piece {
     super(player);
   }
 
-  checkInDirection(board, startSquare, rowChange, colChange, available_moves) {
+  checkInDirection(board, startSquare, rowChange, colChange, availableMoves) {
     let checkSquare = Square.copy(startSquare);
     checkSquare.row += rowChange;
     checkSquare.col += colChange;
@@ -14,27 +14,27 @@ export default class Bishop extends Piece {
       let pieceAtSquare = board.getPiece(checkSquare);
       if (!!pieceAtSquare) {
         if (this.canCapture(pieceAtSquare))
-          available_moves.push(Square.copy(checkSquare));
+          availableMoves.push(Square.copy(checkSquare));
         break;
       }
-      available_moves.push(Square.copy(checkSquare));
+      availableMoves.push(Square.copy(checkSquare));
       checkSquare.row += rowChange;
       checkSquare.col += colChange;
     }
   }
 
   getAvailableMoves(board) {
-    let piece_square = board.findPiece(this);
-    let available_moves = [];
+    let pieceSquare = board.findPiece(this);
+    let availableMoves = [];
     // Checking in the +1,+1 direction
-    this.checkInDirection(board, piece_square, 1, 1, available_moves);
+    this.checkInDirection(board, pieceSquare, 1, 1, availableMoves);
     // Checking in the +1,-1 direction
-    this.checkInDirection(board, piece_square, 1, -1, available_moves);
+    this.checkInDirection(board, pieceSquare, 1, -1, availableMoves);
     // Checking in the -1,+1 direction
-    this.checkInDirection(board, piece_square, -1, 1, available_moves);
+    this.checkInDirection(board, pieceSquare, -1, 1, availableMoves);
     // Checking in the -1,-1 direction
-    this.checkInDirection(board, piece_square, -1, -1, available_moves);
+    this.checkInDirection(board, pieceSquare, -1, -1, availableMoves);
 
-    return available_moves;
+    return availableMoves;
   }
 }
