@@ -8,8 +8,12 @@ export default class Square {
     return new Square(row, col);
   }
 
-  static copy(other) {
-    return new Square(other.row, other.col);
+  static copyWithOffset(square, rowChange, colChange) {
+    return new Square(square.row + rowChange, square.col + colChange);
+  }
+
+  static copy(square) {
+    return this.copyWithOffset(square, 0, 0);
   }
 
   equals(otherSquare) {

@@ -3,9 +3,10 @@ import GameSettings from "./gameSettings";
 import Square from "./square";
 
 export default class Board {
-  constructor() {
-    this.currentPlayer = Player.WHITE;
+  constructor(currentPlayer = Player.WHITE) {
+    this.currentPlayer = currentPlayer;
     this.board = this.createBoard();
+    this.history = [];
   }
 
   createBoard() {
@@ -40,6 +41,11 @@ export default class Board {
     if (!!movingPiece && movingPiece.player === this.currentPlayer) {
       this.setPiece(toSquare, movingPiece);
       this.setPiece(fromSquare, undefined);
+      this.history.push({
+        piece: movingPiece,
+        from: fromSquare,
+        to: toSquare,
+      });
       this.currentPlayer =
         this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE;
     }

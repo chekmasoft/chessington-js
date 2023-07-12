@@ -98,4 +98,36 @@ describe("Bishop", () => {
 
     moves.should.not.deep.include(Square.at(6, 6));
   });
+
+  it("can il vaticano horizontally", () => {
+    const bishop1 = new Bishop(Player.WHITE);
+    const bishop2 = new Bishop(Player.WHITE);
+    const enemyPiece1 = new Pawn(Player.BLACK);
+    const enemyPiece2 = new Pawn(Player.BLACK);
+    board.setPiece(Square.at(0, 0), bishop1);
+    board.setPiece(Square.at(0, 3), bishop2);
+    board.setPiece(Square.at(0, 1), enemyPiece1);
+    board.setPiece(Square.at(0, 2), enemyPiece2);
+
+    const moves1 = bishop1.getAvailableMoves(board);
+    const moves2 = bishop2.getAvailableMoves(board);
+    moves1.should.deep.include(Square.at(0, 3));
+    moves2.should.deep.include(Square.at(0, 0));
+  });
+
+  it("can il vaticano vertically", () => {
+    const bishop1 = new Bishop(Player.WHITE);
+    const bishop2 = new Bishop(Player.WHITE);
+    const enemyPiece1 = new Pawn(Player.BLACK);
+    const enemyPiece2 = new Pawn(Player.BLACK);
+    board.setPiece(Square.at(0, 0), bishop1);
+    board.setPiece(Square.at(3, 0), bishop2);
+    board.setPiece(Square.at(1, 0), enemyPiece1);
+    board.setPiece(Square.at(2, 0), enemyPiece2);
+
+    const moves1 = bishop1.getAvailableMoves(board);
+    const moves2 = bishop2.getAvailableMoves(board);
+    moves1.should.deep.include(Square.at(3, 0));
+    moves2.should.deep.include(Square.at(0, 0));
+  });
 });

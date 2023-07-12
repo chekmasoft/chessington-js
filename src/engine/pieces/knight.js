@@ -8,19 +8,21 @@ export default class Knight extends Piece {
 
   getAvailableMoves(board) {
     let pieceSquare = board.findPiece(this);
-    let available_moves = [];
+    let availableMoves = [];
     for (let rowChange = -2; rowChange <= 2; rowChange++) {
       for (let colChange = -2; colChange <= 2; colChange++) {
         if (Math.abs(rowChange * colChange) !== 2) continue;
-        let checkSquare = Square.copy(pieceSquare);
-        checkSquare.row += rowChange;
-        checkSquare.col += colChange;
+        let checkSquare = Square.copyWithOffset(
+          pieceSquare,
+          rowChange,
+          colChange
+        );
         if (!board.isInBounds(checkSquare)) continue;
         let pieceAtSquare = board.getPiece(checkSquare);
         if (!!pieceAtSquare && !this.canCapture(pieceAtSquare)) continue;
-        available_moves.push(checkSquare);
+        availableMoves.push(checkSquare);
       }
     }
-    return available_moves;
+    return availableMoves;
   }
 }

@@ -1,3 +1,5 @@
+import Square from "../square";
+
 export default class Piece {
   constructor(player) {
     this.player = player;
@@ -11,7 +13,26 @@ export default class Piece {
   }
 
   canCapture(otherPiece) {
-    return otherPiece.player !== this.player && otherPiece.pieceType !== "King";
+    return (
+      !!otherPiece &&
+      otherPiece.player !== this.player &&
+      otherPiece.pieceType !== "King"
+    );
+  }
+
+  checkInDirection(board, startSquare, rowChange, colChange, availableMoves) {
+    let checkSquare = Square.copyWithOffset(startSquare, rowChange, colChange);
+    while (board.isInBounds(checkSquare)) {
+      let pieceAtSquare = board.getPiece(checkSquare);
+      if (!!pieceAtSquare) {
+        if (this.canCapture(pieceAtSquare))
+          availableMoves.push(Square.copy(checkSquare));
+        break;
+      }
+      availableMoves.push(Square.copy(checkSquare));
+      checkSquare.row += rowChange;
+      checkSquare.col += colChange;
+    }
   }
 
   moveTo(board, newSquare) {
